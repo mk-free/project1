@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Make site responsive on mobile/tablet -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Smart BH</title> 
+    </head>
+    <body>
+        <div>Traveling at <%= specs.start %> Comming Back at <%= specs.end%></div>
+        <div>Requisted Minum Ratings: <%= specs.rating %></div>
+            <% for(let i=0;i<result.length;i++){%>  
+            <!--<div class='row'>-->
+            <div class="card mb-3" style="max-width: 900px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="<%=result[i].poster%>" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><%=result[i].name%></h5> 
+                            <h6> <%= result[i].rated %>, <%= result[i].runtime %> (Min) in <%= result[i].showlang %> </h6>
+                            <p class="card-text mb-0"><small class="text-muted"><%=result[i].genres%></small></p>
+                            <p class="card-text mt-0"><small class='text-muted'>Produced By <%=result[i].production%> in <%=result[i].country%></small></p>
+                            <%for (let j = 0;j< result[i].rating.length;j++){ %>
+        	                <p class='card-text m-0'><%= result[i].rating[j].Source %>=<%=result[i].rating[j].Value %></p>
+        	                <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+        	    
+        	    
+                <% for(let n=0;n<result[i].cinemas.length;n++){%>
+            		<div>Cinema: <%= result[i].cinemas[n].name %></div>
+            		
+            		
+            		<%for(let m=0;m<result[i].cinemas[n].shows.length;m++){%>
+            			<div>Theater Type: <%= result[i].cinemas[n].shows[m].theater %></div>
+            			
+            			
+            			<%for(let j=0;j<result[i].cinemas[n].shows[m].time.length;j++){%>
+            			    Time: <%= result[i].cinemas[n].shows[m].time[j].screen %> <%= result[i].cinemas[n].shows[m].time[j].timea%>
+            			<% } %>
+            			
+            			
+            		<% } %> 
+            		
+            		
+        	    <% } %>
+        	<!--</div>    -->
+    	    <% } %>
+        
+    </body>
+</html>

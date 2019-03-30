@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Make site responsive on mobile/tablet -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Smart BH</title> 
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <!--<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" >
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>-->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>        
+        <link rel="stylesheet" href="/stylesheets/main.css">
+
+    </head>
+    <body>
+      <h1> test</h1>
+        <div class='container mt-5 px-0'>
+            <form method='post' action='/'>
+                <div class='row justify-content-center mx-3'>
+                    <div class='col-md-12 order-1 pr-0'>
+                        <div class='row'>
+                            <div class ='col-lg-5'>
+                                <div class='row'>
+                                    <div class='col-6' id='to_bh'></div>
+                                    <div class='col-6' id='to_dm'></div>
+                                </div>
+                            </div id='chart'>
+                            <!--<div class='col-8' id='chart_div'></div>-->
+                            <div class='col-lg-7' id='timeline-chart'></div>
+                        </div>
+                        <div class='row justify-content-center'>
+                            <div class='col-md-5 p-0'>
+                                <div class="slidecontainer">
+                                    <div>
+                                        <strong><label for="myRange1" class='mb-0'>Minimum Movie Rating:</label></strong>
+                                    </div>
+                                    <div class='d-inline'>
+                                        <input type="range" min="1" max="10" value="5" step='0.5' class="slider mr-2" id="myRange1" name=trip[rating]>
+                                    </div>
+                                    <span id="demo1">5.0</span><span> Starts</span>
+                                    <div>
+                                        <label class="form-check-label" for="unrated">
+                                            <input class="form-check-input"  name='trip[ratingf]' type="checkbox" value='Unrated' id="unrated" checked>
+                                            <input class="form-check-input"  name='trip[ratingf]' type="hidden" value='' id="unrated">
+                                            <Strong>Include Unrated</Strong>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="slidecontainer">
+                                    <div>
+                                        <strong><label for="myRange2" class='mb-0 mt-3'>Staying in Bahrain For:</label></strong>
+                                    </div>
+                                    <div class='d-inline'>
+                                        <input type="range" min="2" max="12" value="4" step='1' class="slider mr-2" id="myRange2" name=trip[stay]>
+                                    </div>
+                                    <div class='d-inline'><span id="demo2">4</span><span> Hours</span></div>
+                                </div>
+                                <div class="slidecontainer">
+                                    <div>
+                                        <strong><label for="myRange3" class='mb-0 mt-3'>Leaving After:</label></strong>
+                                    </div>
+                                    <div class='d-inline'>
+                                    <input type="range" min="0" max="12" value="0" step='1' class="slider mr-2" id="myRange3" name='trip[after]'></div>
+                                    <div class='d-inline'><span id="demo3">0</span><span> Hours</span></div>
+                                </div>
+                            </div>
+                            <div class='col-md-7 justify-content-center'>
+                                <!--<div class="form-check px-0">-->
+                                    <div> <strong>Choose Genres:</strong></div>
+                                    <div class='row'>
+                                        <div class='col-6 pl-1'>
+                                            <label class="form-check-label container" for="defaultCheck1">
+                                                <input class="form-check-input exclusive" data-linked='group1' name='genres[]' type="checkbox" value='^([A-Z]).*' id="defaultCheck1" checked>
+                                                <Strong>Any</Strong>
+                                            </label>
+                                            <label class="form-check-label container" for="defaultCheck2">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Action' id="defaultCheck2">
+                                               Action
+                                            </label>
+                                            <label class="form-check-label container" for="defaultCheck3">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Sci-Fi' id="defaultCheck3">
+                                                Sci-Fi
+                                            </label>
+                                            <label class="form-check-label container" for="defaultCheck7">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Adventure' id="defaultCheck7">
+                                                Adventure
+                                            </label>              
+                                            <label class="form-check-label container" for="defaultCheck9">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Family' id="defaultCheck9">
+                                                Family
+                                            </label>
+                                            <label class="form-check-label container" for="defaultCheck11">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Fantasy' id="defaultCheck11">
+                                                Fantasy
+                                            </label>
+                                            <label class="form-check-label container" for="defaultCheck13">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Thriller' id="defaultCheck13">
+                                                Thriller
+                                            </label>
+                                        </div>
+                                        <div class='col-6 pl-1'>
+                                            <label class="form-check-label container" for="defaultCheck4">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Drama' id="defaultCheck4">
+                                                Drama
+                                            </label>
+                                            <label class="form-check-label container" for="defaultCheck5">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Comedy' id="defaultCheck5">
+                                                Comedy
+                                            </label>
+                                            <label class="form-check-label container" for="defaultCheck6">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Romance' id="defaultCheck6">
+                                                Romance
+                                            </label>
+                                            <label class="form-check-label container" for="defaultCheck8">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Animation' id="defaultCheck8">
+                                                Animation
+                                            </label>
+                                            <label class="form-check-label container" for="defaultCheck10">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Horror' id="defaultCheck10">
+                                                Horror
+                                            </label>
+                                            <label class="form-check-label container" for="defaultCheck12">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Mystery' id="defaultCheck12">
+                                                Mystery
+                                            </label>
+                                            <label class="form-check-label container" for="defaultCheck13">
+                                                <input class="form-check-input exclusive" data-linked='group2' name='genres[]' type="checkbox" value='Ungenres' id="defaultCheck13">
+                                                Ungenred
+                                            </label>
+                                        </div>
+                                    </div>    
+                                    <div>
+                                        <div class='pt-2'>
+                                            <strong>Choose Cinema:</strong>
+                                        </div>
+                                        <div>
+                                            <label class="form-check-label container pl-1" for="cinemacheck1">
+                                                <input class="form-check-input exclusive" data-linked='group3' name='cinemas[]' type="checkbox" value='^([A-Z]).*' id="cinemacheck1" checked>
+                                                <strong>Both</strong>
+                                            </label>
+                                            <label class="form-check-label container pl-1" for="cinemacheck2">
+                                                <input class="form-check-input exclusive" data-linked='group4' name='cinemas[]' type="checkbox" value='City Centre Bahrain' id="cinemacheck2">
+                                                City Center
+                                            </label>
+                                            <label class="form-check-label container pl-1" for="cinemacheck3">
+                                                <input class="form-check-input exclusive" data-linked='group5' name='cinemas[]' type="checkbox" value='VOX Cinemas The Avenues' id="cinemacheck3">
+                                                The Avenues
+                                            </label>
+                                        </div>
+                                    </div>
+                                <!--</div>-->
+                            </div>
+
+                        </div>        
+                    </div>
+                    </div>
+                    <input name='trip[toBh]' value='<%= to_bh %>' type='hidden'>
+                    <input name='trip[toDm]' value='<%= to_dm %>' type='hidden'>
+                    <div class='container form-group mt-2'><button class='btn btn-lg btn-block btn-success'>Submit</button></div>
+                </form>
+
+        </div>
+        <div class="container px-0 mt-2">
+            <p class="mb-0 text-center display-fixed text-light">&copy;Smart BH 2019 | <a href="/campground">Home</a></p>
+        </div>
+    </body>
+    <script>
+        console.log('Movies:', <%- JSON.stringify(movies) %>);
+        console.log('to_bh:',<%- JSON.stringify(to_bh) %>);
+        console.log('to_dm:',<%- JSON.stringify(to_dm) %>);
+        console.log('to Bahrain:',<%- JSON.stringify(to_bahrain) %>);
+        console.log('to Dammam:',<%- JSON.stringify(to_dammam) %>);
+    </script>
+    <script>
+
+var options = {
+      chart: {
+        type: "line",
+        height: 300,
+        foreColor: "#999",
+        scroller: {
+          enabled: true,
+          track: {
+            height: 7,
+            background: '#e0e0e0'
+          },
+          thumb: {
+            height: 10,
+            background: '#94E3FF'
+          },
+          scrollButtons: {
+            enabled: true,
+            size: 9,
+            borderWidth: 2,
+            borderColor: '#008FFB',
+            fillColor: '#008FFB'
+          },
+          padding: {
+            left: 30,
+            right: 20
+          }
+        },
+        stacked: false,
+        dropShadow: {
+          enabled: true,
+          enabledSeries: [0],
+          top: -2,
+          left: 2,
+          blur: 5,
+          opacity: 0.06
+        }
+      },
+      colors: ['#00E396', '#0090FF'],
+      stroke: {
+        curve: "smooth",
+        width: 3
+      },
+      dataLabels: {
+        enabled: false
+      },
+      series: [{
+        name: 'To Bahrain',
+        data: <%- JSON.stringify(to_bahrain) %>
+      }, {
+        name: 'To Dammam',
+        data: <%- JSON.stringify(to_dammam) %>
+      }],
+      markers: {
+        size: 0,
+        strokeColor: "#fff",
+        strokeWidth: 3,
+        strokeOpacity: 1,
+        fillOpacity: 1,
+        hover: {
+          size: 6
+        }
+      },
+      xaxis: {
+        type: "datetime",
+        axisBorder: {
+          show: false
+        },
+        axisTicks: {
+          show: false
+        }
+      },
+      yaxis: {
+        tickAmount: 4,
+        min: 0,
+        labels: {
+          offsetX: -15,
+          offsetY: 0
+        },
+        tooltip: {
+          enabled: true
+        },
+        title: {
+        text: "Trip time in Minuts"
+      }
+      },
+      grid: {
+        padding: {
+          left: -5,
+          right: 5
+        }
+      },
+      tooltip: {
+        x: {
+          format: "hh:mm TT  MMM/dd"
+        },
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'left'
+      },
+      fill: {
+        type: "solid",
+        fillOpacity: 0.7
+      }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#timeline-chart"), options);
+
+    chart.render();
+    function generateDayWiseTimeSeries(s, count) {
+      var values = [[
+        4,3,10,9,29,19,25,9,12,7,19,5,13,9,17,2,7,5
+      ], [
+        2,3,8,7,22,16,23,7,11,5,12,5,10,4,15,2,6,2
+      ]];
+      var i = 0;
+      var series = [];
+      var x = new Date("11 Nov 2012").getTime();
+      while (i < count) {
+        series.push([x, values[s][i]]);
+        x += 86400000;
+        i++;
+      }
+      return series;
+    }
+</script>
+<script>
+      google.charts.load('current', {'packages':['gauge']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['To BH', <%= to_bh%>],
+        ]);
+
+        var options = {
+          width: 200, height: 120,
+          greenFrom:0,greenTo:60,
+          redFrom: 120, redTo: 240,
+          yellowFrom:60, yellowTo: 120,
+          minorTicks: 5,max:240, height:180
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('to_bh'));
+
+        chart.draw(data, options);
+      }
+</script>
+<script>
+      google.charts.load('current', {'packages':['gauge']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['To DMM', <%= to_dm%>]
+        ]);
+
+        var options = {
+          width: 200, height: 120,
+          greenFrom:0,greenTo:60,
+          redFrom: 120, redTo: 240,
+          yellowFrom:60, yellowTo: 120,
+          minorTicks: 5,max:240, height:180
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('to_dm'));
+
+        chart.draw(data, options);
+      }
+
+    </script>
+    <script>
+</script>
+    <script>
+        var slider1 = document.getElementById("myRange1");
+        var output1 = document.getElementById("demo1");
+        output1.innerHTML = slider1.value; // Display the default slider value
+
+        // Update the current slider value (each time you drag the slider handle)
+        slider1.oninput = function() {
+            output1.innerHTML = this.value;
+        }
+        var slider2 = document.getElementById("myRange2");
+        var output2 = document.getElementById("demo2");
+        output2.innerHTML = slider2.value; // Display the default slider value
+
+        // Update the current slider value (each time you drag the slider handle)
+        slider2.oninput = function() {
+            output2.innerHTML = this.value;
+        }
+        var slider3 = document.getElementById("myRange3");
+        var output3 = document.getElementById("demo3");
+        output3.innerHTML = slider3.value; // Display the default slider value
+
+        // Update the current slider value (each time you drag the slider handle)
+        slider3.oninput = function() {
+            output3.innerHTML = this.value;
+        }
+
+    </script>
+    <script>
+    $(function() {
+        $('.exclusive').click(function() {
+            var linked = $(this).data('linked');
+            // console.log(linked);
+            if(linked == 'group1'){
+                if ( $( this ).prop( "checked" ) ) $(':checkbox[data-linked="group2"]').prop('checked', false);
+                else $(':checkbox[data-linked="group2"]').prop('checked', true);
+            }
+            else if(linked == 'group2'){
+                if ( $( this ).prop( "checked" ) ) $(':checkbox[data-linked="group1"]').prop('checked', false);
+                if( $(':checkbox[data-linked="group2"]:checked').length == 0 && !$( '.exclusive' ).prop( "checked" ) ) $(':checkbox[data-linked="group1"]').prop('checked', true);
+            }
+            if(linked == 'group3'){
+                if ( $( this ).prop( "checked" ) ){ $(':checkbox[data-linked="group4"]').prop('checked', false);$(':checkbox[data-linked="group5"]').prop('checked', false);}
+                else {$(':checkbox[data-linked="group4"]').prop('checked', true);$(':checkbox[data-linked="group5"]').prop('checked', false);}
+            }
+            else if(linked == 'group4'){
+                // if ( $( this ).prop( "checked" ) ) $(':checkbox[data-linked="group3"]').prop('checked', false);
+                // if( $(':checkbox[data-linked="group4"]:checked').length == 0 && !$( '.exclusive' ).prop( "checked" ) ) $(':checkbox[data-linked="group3"]').prop('checked', true);
+                if ( $( this ).prop( "checked" ) ){ $(':checkbox[data-linked="group3"]').prop('checked', false);$(':checkbox[data-linked="group5"]').prop('checked', false);}
+                else {$(':checkbox[data-linked="group3"]').prop('checked', true);$(':checkbox[data-linked="group5"]').prop('checked', false);}
+            }
+            else if(linked == 'group5'){
+                // if ( $( this ).prop( "checked" ) ) $(':checkbox[data-linked="group3"]').prop('checked', false);
+                // if( $(':checkbox[data-linked="group4"]:checked').length == 0 && !$( '.exclusive' ).prop( "checked" ) ) $(':checkbox[data-linked="group3"]').prop('checked', true);
+                if ( $( this ).prop( "checked" ) ){ $(':checkbox[data-linked="group3"]').prop('checked', false);$(':checkbox[data-linked="group4"]').prop('checked', false);}
+                else {$(':checkbox[data-linked="group3"]').prop('checked', true);$(':checkbox[data-linked="group4"]').prop('checked', false);}
+            }
+        });
+    });
+    </script>
+</html>
